@@ -9,9 +9,12 @@ class Message:
         self.__dict__.update(kwargs)
         self.json(*args)
 
-    def __call__(self, **kwargs):
+    def __call__(self,*args, **kwargs):
         if kwargs:
             self.__dict__.update(kwargs)
+        if args:
+            for jstr in args:
+                self.json(jstr)
         return self.__dict__
 
     def __str__(self):
