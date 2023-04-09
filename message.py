@@ -1,13 +1,13 @@
-# Класс упрощающий работу с множеством переменных, например класса
+# Класс - надстройка над классом dict, упрощающий работу с множеством переменных, например класса
 # простой переход от json к dict и обратно
-# простое добавление и обновление значений переменных
+# простое добавление и обновление значений переменных, удаление переменных
 # made by korol4ik
 import json
 
 class Message:
     def __init__(self, *args, **kwargs):
         self.__dict__.update(kwargs)
-        self.json(*args)
+        self(*args)
 
     def __call__(self,*args, **kwargs):
         if kwargs:
@@ -36,3 +36,8 @@ class Message:
                 return json.dumps(self.__dict__)
             except Exception as e:
                 print(f'can not update message from json {_json}, {e}')
+    def rm(self, *args):  # list of keys
+        for key in args:
+            if key in self.__dict__:
+                self.__dict__.pop(key)
+
